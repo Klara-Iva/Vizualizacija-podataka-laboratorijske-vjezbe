@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+    <script>
+        var width = 2000;
+        var height = 1000;
+        var rectWidth = 100;
+        var rectHeight = 150;
+        var radius = 35;
+        var circleY = 70;
+
+        var colors = ["blanchedalmond", "black", "pink"];
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background-color", "white");
+
+        for (i = 0; i < 3; i++) {
+            var id = "circle" + (i + 1);
+            var cx = 250 + i * 300; // za krugove
+            makeCircle(id, cx)
+            var x = 200 + i * 300; //za pravokutnike
+            makeRectangle(x, colors[i])
+        }
+
+        makeTransformation("#circle1", 250, 1000, "bounce", "translate(0, 300)");
+        makeTransformation("#circle2", 250, 6000, "elastic", "translate(0, 300)");
+        makeTransformation("#circle3", 250, 1000, "linear-in-out", "translate(0, 440)");
+  
+
+        function makeCircle(id, cx) {
+            svg.append("circle")
+                .attr("id", id)
+                .attr("cx", cx)
+                .attr("cy", circleY)
+                .attr("r", radius)
+                .style("fill", "burlywood");
+        }
+
+        function makeRectangle(x, color) {
+            svg.append("rect")
+                .attr("x", x)
+                .attr("y", 400)
+                .attr("width", rectWidth)
+                .attr("height", rectHeight)
+                .style("fill", color);
+        }
+
+        function makeTransformation(id, delay, duration, ease, transform) {
+            svg.select(id)
+                .transition()
+                .delay(delay)
+                .duration(duration)
+                .ease(ease)
+                .attr("transform", transform);
+        }
+    </script>
+
+
+
+
+</body>
+</html>

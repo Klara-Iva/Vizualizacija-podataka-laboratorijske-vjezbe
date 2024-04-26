@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zad3</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<script>
+
+
+const element = d3.select('body');
+
+
+const podaci = [
+    { naslov: "Podnaslov 1", tekst: "Tekst 1." },
+    { naslov: "Podnaslov 2", tekst: "Tekst 2." },
+    { naslov: "Podnaslov 3", tekst: "Tekst 3." },
+    { naslov: "Podnaslov 4", tekst: "Tekst 4." },
+    { naslov: "Podnaslov 5", tekst: "Tekst 5." },
+    { naslov: "Podnaslov 6", tekst: "Tekst 6." },
+    { naslov: "Podnaslov 7", tekst: "Tekst 7." },
+    { naslov: "Podnaslov 8", tekst: "Tekst 8." },
+    { naslov: "Podnaslov 9", tekst: "Tekst 9." },
+    { naslov: "Podnaslov 10", tekst: "Tekst 10." },
+];
+
+
+const divovi = element
+    .selectAll('div')
+    .data(podaci)
+    .enter()
+    .append('div');
+
+
+divovi.each(function(d, i) {
+    const divElement = d3.select(this);
+    const redniBroj = i + 1;
+
+
+    divElement
+        .append('h2')
+        .text(d.naslov);
+
+
+    const paragraf = divElement
+        .append('p');
+
+    paragraf.text(d.tekst);
+
+
+});
+
+</script>
+</body>
+</html>

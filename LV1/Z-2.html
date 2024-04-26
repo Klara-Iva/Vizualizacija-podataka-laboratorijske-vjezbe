@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zad2</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+     
+    
+</head>
+<body>
+   
+<script>
+   
+
+
+
+
+ const element = d3.select('body')
+    element
+    .append('h1')
+    .text('Vizualizacija podataka');
+ 
+const div1= d3.select('body')
+    .append('div')
+    
+   div1 .append('h2')
+    .text('Podnaslov 1');
+
+div1
+    .append('p')
+    .text('Tekst 1.');
+
+const div2= d3.select('body')
+    .append('div')
+    div2
+    .append('h2')
+    .text('Podnaslov 2');
+
+div2
+    .append('p')
+    .text('Tekst 2.');
+
+
+
+div1.select("p").text("Promijenjeni tekst 1")
+div2.select("p").text("Promijenjeni tekst 2")
+
+var IDs = ["ID1", "ID2"];
+        d3.selectAll("div").data(IDs).attr("id", function(d) { return d; } );
+        
+
+
+</script>
+</body>
+</html>

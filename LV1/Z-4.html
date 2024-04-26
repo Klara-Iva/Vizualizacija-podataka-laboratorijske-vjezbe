@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zad4</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+
+<script>
+const element = d3.select('body');
+const sirina = 100;
+const visina = 600;
+const svg = element
+    .append('svg')
+    .attr('width', sirina)
+    .attr('height', visina);
+const pravokutnik = svg
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', sirina)
+    .attr('height', visina)
+    .style('fill', 'yellow')
+    .style('stroke', 'black')
+    .style('stroke-width', 5)
+    .style('fill-opacity', 0.5)
+    .style('stroke-opacity', 1);
+</script>
+</body>
+</html>

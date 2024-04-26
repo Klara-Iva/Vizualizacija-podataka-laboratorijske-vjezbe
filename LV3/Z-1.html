@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+<script src="lv3.js"></script>
+
+<svg id="svg-primjer" width="400" height="400">
+  <rect id="kvadrat" x="50" y="50" width="100" height="100" stroke="red" stroke-width="5" fill="none" />
+</svg>
+
+<script>
+
+const svgPrimjer = document.getElementById("svg-primjer");
+const kvadrat = document.getElementById("kvadrat");
+
+
+setTimeout(() => {
+  kvadrat.style.transition = "fill 5s linear";
+  kvadrat.style.fill = "blue";
+}, 3000);
+
+
+setTimeout(() => {
+  const widthSVG = svgPrimjer.getBoundingClientRect().width;
+  kvadrat.style.transition = "width 2s linear, opacity 2s linear";
+  kvadrat.style.width = `${widthSVG / 2}px`;  
+  kvadrat.style.opacity = "0";
+}, 8000);
+
+
+</script>
+</body>
+</html>

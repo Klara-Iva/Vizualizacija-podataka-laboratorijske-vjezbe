@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+    <script>
+        var width = 2000;
+        var height = 1000;
+        var rectWidth = 300;
+        var rectHeight = 100;
+        
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background-color", "blanchedalmond");
+
+        var rect = svg.append("rect")
+            .attr("x", width - rectWidth)
+            .attr("y", height - rectHeight)
+            .attr("width", rectWidth)
+            .attr("height", rectHeight)
+            .style("fill", "black");
+
+        svg.select("rect")
+            .transition()
+            .delay(250)
+            .duration(1000)
+            .attr("transform", function(d) { return `translate(${-(width - rectWidth)}, 0)`; } );
+
+        svg.select("rect")
+            .transition()
+            .delay(1250)
+            .duration(1000)
+            .attr("transform", function(d) { return `translate(${-(width - rectWidth)}, ${-(height - rectHeight)})`; } );
+    </script>
+</body>
+</html>

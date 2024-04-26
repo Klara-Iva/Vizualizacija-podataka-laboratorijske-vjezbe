@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+
+  <style>
+      body {
+          background-color: blanchedalmond;
+      }
+  </style>
+</head>
+<body>
+
+<script src="lv3.js"></script>
+<script>
+       var width = 4000;
+            var height = 3200;
+            var sunRadius = 30;
+
+const planets = [
+  {
+    name: "Merkur",
+    radius: 2440, //polovica stvarne vrijednsoti
+    distance: 57.91, //distance from the sun
+    rotationSpeed: 1407.6/100, //brzina smanjena da ljudsko oko moze vidjet
+    color: "#ff9933",
+    position: 100,
+  },
+  {
+    name: "Venera",
+    radius: 6052,
+    distance: 108.2,
+    rotationSpeed: 5832.5/100,
+    color: "#ffff00",
+    position: 200,
+  },
+  {
+    name: "Zemlja",
+    radius: 6378,
+    distance: 149.6,
+    rotationSpeed: 23.9345,
+    color: "#008000",
+    position: 300,
+  },
+  {
+    name: "Mars",
+    radius: 3390,
+    distance: 227.9,
+    rotationSpeed: 24.6229,
+    color: "#ff0000",
+    position: 400,
+  },
+  {
+    name: "Jupiter",
+    radius: 71492,
+    distance: 778.5/2,
+    rotationSpeed: 9.925,
+    color: "#ffa500",
+    position: 500,
+  },
+  {
+    name: "Saturn",
+    radius: 60268,
+    distance: 1433.5/2,
+    rotationSpeed: 10.72,
+    color: "#ffff99",
+    position: 600,
+  },
+  {
+    name: "Uran",
+    radius: 25559,
+    distance: 2876.7/3,
+    rotationSpeed: 17.24,
+    color: "#00ffff",
+    position: 700,
+  },
+  {
+    name: "Neptun",
+    radius: 24764,
+    distance: 4504.3/3,
+    rotationSpeed: 16.11,
+    color: "#4169e1",
+    position: 800,
+  },
+];
+
+var svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+
+            svg.append("circle")
+                .attr("r", sunRadius)
+                .attr("cx", width / 2)
+                .attr("cy", height / 2)
+                .attr("fill", "yellow");
+
+            var group = svg.append("g")
+                .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+            group.selectAll("g.circle")
+			            .data(planets)
+			            .enter()
+			            .append("g")
+			            .each(function(d, i) {
+				  d3.select(this)
+					.append("circle")
+					.attr("class", "background")
+					.attr("r", d.distance)
+					.style("fill", "none")
+					.style("stroke","black");
+
+				  d3.select(this)
+					.append("circle")
+					.attr("r", d.radius/1000)
+					.attr("cx", d.distance)
+					.attr("cy", 0)
+					.attr("class", "rotate_circle")
+					.style("fill", d.color);
+			  });
+
+
+
+        
+              var time = Date.now();
+
+              d3.timer(function() {
+                var difference = Date.now() - time;
+                svg.selectAll(".rotate_circle")
+                .attr("transform", function(d) {
+                    return `rotate(-${d.position + difference * d.rotationSpeed / 100})`;
+                });
+              });     
+
+</script>
+</script>
+</body>
+</html>

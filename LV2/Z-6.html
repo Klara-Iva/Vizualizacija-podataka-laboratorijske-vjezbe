@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+
+    <script>
+        var data=[{"date": "26-Mar-24", "value": 17},
+                {"date": "27-Mar-24", "value": 21},
+                {"date": "28-Mar-24", "value": 20},
+                {"date": "29-Mar-24", "value": 23},
+                {"date": "30-Mar-24", "value": 25},
+                {"date": "31-Mar-24", "value": 25},
+                {"date": "1-Apr-24", "value": 27},
+                {"date": "2-Apr-24", "value":20},
+                {"date": "3-Apr-24", "value": 20},
+                {"date": "4-Apr-24", "value": 15}]
+
+        var margin = {top: 50, bottom: 70, left: 80, right: 20};
+        var width = 850 - margin.left - margin.right;
+        var height = 700 - margin.top - margin.bottom;
+        
+        var svg = d3.select("body") 
+            .append("svg") 
+            .attr("width", width + margin.left + margin.right + 20) 
+            .attr("height", height + margin.top + margin.bottom)
+            .style("background-color", "#ffe09b")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var parseDate = d3.time.format("%d-%b-%y").parse;
+        
+        var minDate = new Date(data[0].date);
+        var maxDate = new Date(data[data.length - 1].date);
+
+        var x = d3.time.scale()
+            .domain([minDate, maxDate])
+            .rangeRound([0, width]);
+
+        var y = d3.scale.linear()
+            .domain([0, d3.max(data, function(d) { return d.value; })+3])
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .ticks(10);
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(6);
+            
+        data.forEach(function(d) { d.date = parseDate(d.date); });
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .selectAll("text")
+            .style("text-anchor", "middle");
+
+    
+            
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -(height / 2))
+            .attr("y", -((margin.left / 2) + 10))
+            .style("text-anchor", "middle")
+            .text("Temperatura (Celsius)")
+			.style("font-size", "25px")
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", (height + (margin.bottom / 2)))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Datum")
+            .style("font-size", "25px");
+
+        var valueline = d3.svg.line()
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.value); });
+            
+         var linechart = svg.append("path")
+            .attr("class", "line")
+            .attr("d", valueline(data))
+            .style("stroke","#9a7cae")
+            .style("stroke-width", 3)
+            .attr("fill","none")   
+    </script>
+
+</body>
+</html>

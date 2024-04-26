@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      odabrana zupanija:
+      <span id="county-info"></span>
+    </div>
+    <script>
+      var width = 960;
+      var height = 700;
+      var projection = d3.geo
+        .mercator()
+        .center([0, 10])
+        .scale(6000)
+        .translate([17600, 4500])
+        .rotate([-180, 0]);
+      var path = d3.geo.path().projection(projection);
+
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("background", "white")
+        .call(d3.behavior.zoom().scaleExtent([0.5, 8]).on("zoom", zumiraj))
+        .append("g");
+
+      d3.json("cro_regv3.json", function (error, cro) {
+        var data = topojson.feature(cro, cro.objects.layer1);
+
+        var states = svg
+          .selectAll("path.county")
+          .data(data.features)
+          .enter()
+          .append("path")
+          .attr("class", "county")
+          .attr("id", function (d) {
+            return d.id;
+          })
+          .attr("d", path)
+          .style("fill", "#BF645C")
+          .style("stroke", "black")
+          .style("stroke-width", 1)
+          .style("stroke-opacity", 1)
+          .on("mouseover", function (d) {
+            var countyName = d.properties.name;
+            d3.select("#county-info").text(countyName);
+          })
+          .on("mouseout", function () {
+            d3.select("#county-info").text("");
+          });
+      });
+      function zumiraj() {
+        svg.attr(
+          "transform",
+          "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")"
+        );
+      }
+    </script>
+  </body>
+</html>
